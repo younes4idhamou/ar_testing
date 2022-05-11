@@ -6,6 +6,32 @@
         <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                    $.get("https://firebasestorage.googleapis.com/v0/b/arforeveryone-prod.appspot.com/o",                      
+                 function(json, status){
+            
+                        var data = json.items;
+                        const patt=[];
+                        const marker=[];
+                        const obj=[];
+                        const listObj=[];
+            for(i=0;i<=8;i++){
+            if(JSON.stringify(data[i].name).substring(1,4)=="obj"){
+                   obj[i]=JSON.stringify(data[i].name).substring(5).replace('"',"");
+                   listObj[i]='<a-asset-item id="'+obj[i]+'" src="https://firebasestorage.googleapis.com/v0/b/arforeveryone-prod.appspot.com/o/obj%2F'+obj[i]+'?alt=media&token=89b8582f-f04d-4785-9c0b-10aee3ebfb27"></a-asset-item>';
+        
+                }  
+        
+                        console.log(JSON.stringify(data[i].name));
+                        
+            }
+            $("#container").append(listObj);
+                    });
+                });
+            </script>
+           
     </head>
 
     <body style="margin: 0; overflow: hidden;">
@@ -18,33 +44,14 @@
             embedded
             gesture-detector
         >
-            <a-assets>
-                <a-asset-item
-                    id="animated-asset-1"
-                    src="https://firebasestorage.googleapis.com/v0/b/arforeveryone-prod.appspot.com/o/1.glb?alt=media&token=928d05c4-79a1-4e1c-889e-2289d12a48bf"
-                ></a-asset-item>
-            </a-assets>
+            <assets id="container" ></assets>
+             <script>
+                marker.forEach(element => {
+                    const a=element.replace(".patt","");
+                    document.write('<a-marker id="animated-'+a+'" type="pattern" preset="custom" url="https://firebasestorage.googleapis.com/v0/b/arforeveryone-prod.appspot.com/o/marker%2F'+element+'?alt=media&token=61b11ffb-034a-4a5e-9c26-5551b1acb023" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;" id="marker'+a+'"><a-entity id="bowser-'+a+'" scale="0.0018968007377193397 0.0018968007377193397 0.0018968007377193397" animation-mixer="loop: repeat" gltf-model="#'+a+'" class="clickable" gesture-handler></a-entity></a-marker>');
 
-            <a-marker
-                id="animated-marker"
-                type="pattern"
-                preset="custom"
-                url="https://firebasestorage.googleapis.com/v0/b/arforeveryone-prod.appspot.com/o/1.patt?alt=media&token=1607f7c8-5398-454b-9bd5-99076c821e18"
-                raycaster="objects: .clickable"
-                emitevents="true"
-                cursor="fuse: false; rayOrigin: mouse;"
-                id="markerA"
-            >
-                <a-entity
-                    id="bowser-model"
-                    scale="0.0018968007377193397 0.0018968007377193397 0.0018968007377193397"
-                    animation-mixer="loop: repeat"
-                    gltf-model="#animated-asset-1"
-                    class="clickable"
-                    gesture-handler
-                ></a-entity>
-            </a-marker>
-
+                });
+            </script>
             <a-entity camera></a-entity>
         </a-scene>
     </body>
