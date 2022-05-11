@@ -24,6 +24,7 @@
         
                 }  
         
+
                         console.log(JSON.stringify(data[i].name));
                         
             }
@@ -46,6 +47,7 @@
         >
             <assets id="container" ></assets>
              <script>
+                 const marker=['Ethanol.patt','Oxybutynin.patt','Oxyfluorfen.patt'];
                 marker.forEach(element => {
                     const a=element.replace(".patt","");
                     document.write('<a-marker id="animated-'+a+'" type="pattern" preset="custom" url="https://firebasestorage.googleapis.com/v0/b/arforeveryone-prod.appspot.com/o/marker%2F'+element+'?alt=media&token=61b11ffb-034a-4a5e-9c26-5551b1acb023" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;" id="marker'+a+'"><a-entity id="bowser-'+a+'" scale="0.0018968007377193397 0.0018968007377193397 0.0018968007377193397" animation-mixer="loop: repeat" gltf-model="#'+a+'" class="clickable" gesture-handler></a-entity></a-marker>');
